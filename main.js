@@ -5,6 +5,9 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/
 
 
 
+const otherPlayers = {}; // Store other players' data
+const socket = new WebSocket('ws://multiplayer-production-fae6.up.railway.app'); // Connect to the WebSocket server
+let playerId = null; // Store the unique player ID
 
 
 
@@ -103,7 +106,7 @@ class BasicCharacterController {
     return this._target.quaternion;
   }
 
-  Update(timeInSeconds) {
+    Update(timeInSeconds) {
     if (!this._stateMachine._currentState) {
       return;
     }
@@ -179,8 +182,8 @@ class BasicCharacterController {
       this._mixer.update(timeInSeconds);
     }
   
-    // Send position, rotation, and animation state to the server
-    if (socket.readyState === WebSocket.OPEN) {
+    // Ensure the WebSocket connection is ready before sending data
+    if (socketReady && socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({
         type: 'updatePosition',
         id: this._params.id, // Unique player ID
@@ -724,9 +727,6 @@ _TestLerp(1.0 - Math.pow(0.3, 1.0 / 100.0),
 
 
 
-const otherPlayers = {}; // Store other players' data
-const socket = new WebSocket('ws://multiplayer-production-fae6.up.railway.app'); // Connect to the WebSocket server
-let playerId = null; // Store the unique player ID
 
 socket.addEventListener('message', async (event) => {
   let data;
@@ -786,11 +786,13 @@ socket.addEventListener('message', async (event) => {
 // Handle connection open
 socket.addEventListener('open', () => {
   console.log('Connected to WebSocket server');
+  socketReady = true; // Set the flag to true when the connection is ready
 });
 
 // Handle connection close
 socket.addEventListener('close', () => {
   console.log('Disconnected from WebSocket server');
+  socketReady = false; // Reset the flag when the connection is closed
 });
 
 // Handle errors
