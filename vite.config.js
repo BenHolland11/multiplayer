@@ -8,7 +8,8 @@ export default defineConfig({
     outDir: 'dist', // Output directory for the build
   },
   server: {
-    port: 3000, // You can change this if needed
+    host: '0.0.0.0', // Ensures it works on Railway
+    port: process.env.PORT || 3000, // You can change this if needed
     open: true, // Opens the browser automatically
   }
 });

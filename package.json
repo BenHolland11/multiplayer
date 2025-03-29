@@ -4,11 +4,11 @@
   "description": "My Vite + Node.js project",
   "main": "server.js",
   "scripts": {
-    "dev": "concurrently \"npm run vite\" \"npm run server\"",
+    "dev": "concurrently \"npm run vite\" \"npm run server.js\"",
     "vite": "vite",  
     "server": "nodemon server.js",  
     "build": "vite build",  
-    "start": "npm run build && node server.js"
+    "start": "concurrently \"npm run vite\" \"npm run server.js\""
   },
   "dependencies": {
     "git": "^0.1.5",
