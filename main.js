@@ -725,7 +725,7 @@ _TestLerp(1.0 - Math.pow(0.3, 1.0 / 100.0),
 
 
 const otherPlayers = {}; // Store other players' data
-const socket = new WebSocket('ws://localhost:8080'); // Connect to the WebSocket server
+const socket = new WebSocket('ws://multiplayer-production-fae6.up.railway.app'); // Connect to the WebSocket server
 let playerId = null; // Store the unique player ID
 
 socket.addEventListener('message', async (event) => {
