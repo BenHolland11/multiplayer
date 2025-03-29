@@ -8,10 +8,12 @@
     "start": "node server.js",
     "build": "vite build"
   },
-
   "dependencies": {
     "concurrently": "^9.1.2",
     "git": "^0.1.5",
     "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "vite": "^6.2.3"
   }
 }
