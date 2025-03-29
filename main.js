@@ -3,7 +3,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.mod
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
 
-socketReady = false;
+let socketReady = false;
 const otherPlayers = {}; // Store other players' data
 const socket = new WebSocket('wss://multiplayer-production-fae6.up.railway.app'); // Connect to the WebSocket server
 let playerId = null; // Store the unique player ID
