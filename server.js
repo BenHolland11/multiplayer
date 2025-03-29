@@ -1,8 +1,8 @@
 const WebSocket = require('ws');
 
-const PORT = process.env.PORT || 8080; // Use Railway's PORT or default to 8080
-const wss = new WebSocket.Server({ port: PORT });
+const PORT = process.env.PORT || 8081; // Use Railway’s assigned port
 
+const wss = new WebSocket.Server({ port: PORT });
 
 const clients = new Map();
 
@@ -12,19 +12,19 @@ wss.on('connection', (ws) => {
 
   console.log(`Client connected: ${id}`);
 
-ws.on('message', (message) => {
-  const data = JSON.parse(message); // Parse the incoming message
-  if (data.type === 'updatePosition') {
-    //console.log(`Received position update from ${id}:`, data.position);
-  }
-
-  // Broadcast the message to all other clients
-  for (const [clientId, client] of clients) {
-    if (client !== ws && client.readyState === WebSocket.OPEN) {
-      client.send(message); // Ensure this is a string
+  ws.on('message', (message) => {
+    const data = JSON.parse(message);
+    if (data.type === 'updatePosition') {
+      // console.log(`Received position update from ${id}:`, data.position);
     }
-  }
-});
+
+    // Broadcast message to all clients except the sender
+    for (const [clientId, client] of clients) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    }
+  });
 
   ws.on('close', () => {
     console.log(`Client disconnected: ${id}`);
@@ -32,4 +32,5 @@ ws.on('message', (message) => {
   });
 });
 
-console.log(`WebSocket server is running on wss://localhost:${PORT}`);
+// Use the correct domain in logs
+console.log(`WebSocket server is running on wss://multiplayer-production-fae6.up.railway.app`);
