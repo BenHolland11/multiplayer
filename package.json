@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "My Vite + Node.js project",
   "main": "server.js",
-  "scripts": {
-    "dev": "concurrently \"npx vite\" \"node server.js\"",
-    "start": "concurrently \"npm run dev\" \"npm run server\"",
-    "build": "vite build"
+"scripts": {
+    "dev": "concurrently \"npm run vite\" \"npm run server\"",
+    "vite": "vite",  
+    "server": "nodemon server.js",  
+    "build": "vite build",  
+    "start": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
     "git": "^0.1.5",
