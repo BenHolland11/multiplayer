@@ -5,10 +5,12 @@
   "main": "server.js",
   "scripts": {
     "dev": "concurrently \"npm run vite\" \"npm run server.js\"",
-    "vite": "vite",  
-    "server": "nodemon server.js",  
-    "build": "vite build",  
-    "start": "concurrently \"npm run vite\" \"npm run server\""
+    "vite": "vite",
+    "server": "nodemon server.js",
+    "build": "vite build",
+    "start": "concurrently \"npm run vite\" \"npm run server\"",
+    "frontend": "vite",
+    "backend": "node server.js"
   },
   "dependencies": {
     "git": "^0.1.5",
@@ -16,7 +18,7 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "vite": "^6.2.3",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "vite": "^6.2.3"
   }
 }
