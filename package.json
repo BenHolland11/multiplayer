@@ -3,20 +3,20 @@
   "version": "1.0.0",
   "description": "My Vite + Node.js project",
   "main": "server.js",
-"scripts": {
+  "scripts": {
     "dev": "concurrently \"npm run vite\" \"npm run server\"",
-    "vite": "npx vite",  
+    "vite": "vite",  
     "server": "nodemon server.js",  
     "build": "vite build",  
-    "start": "concurrently \"npm run dev\" \"npm run server\""
+    "start": "npm run build && node server.js"
   },
   "dependencies": {
     "git": "^0.1.5",
-    "ws": "^8.18.1",
-    "vite": "^6.2.3"
+    "ws": "^8.18.1"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
+    "nodemon": "^2.0.22"
   }
 }
