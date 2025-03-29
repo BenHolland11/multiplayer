@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Scene with User Input</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
+        #loginScene, #gameScene { position: absolute; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        #loginScene { background: #222; color: white; flex-direction: column; }
+        #gameScene { display: none; }
+        input { padding: 10px; font-size: 16px; margin-bottom: 10px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <!-- User Login Scene -->
+    <div id="loginScene">
+        <h2>Enter Your User ID</h2>
+        <input type="text" id="userIdInput" placeholder="Enter User ID">
+        <button onclick="handleUserLogin()">Submit</button>
+    </div>
+
+    <!-- 3D Game Scene -->
+    <div id="gameScene"></div>
+
+    <script type="module">
+          import { createScene } from '/scene.js';
+
+    </script>
+</body>
+</html>
