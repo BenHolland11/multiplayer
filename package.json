@@ -5,15 +5,15 @@
   "main": "server.js",
   "scripts": {
     "dev": "concurrently \"npx vite\" \"node server.js\"",
-    "start": "node server.js",
+    "start": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "vite build"
   },
   "dependencies": {
-    "concurrently": "^9.1.2",
     "git": "^0.1.5",
     "ws": "^8.18.1"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "vite": "^6.2.3"
   }
 }
