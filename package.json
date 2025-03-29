@@ -8,7 +8,7 @@
     "vite": "vite",  
     "server": "nodemon server.js",  
     "build": "vite build",  
-    "start": "concurrently \"npm run vite\" \"npm run server.js\""
+    "start": "concurrently \"npm run vite\" \"npm run server\""
   },
   "dependencies": {
     "git": "^0.1.5",
