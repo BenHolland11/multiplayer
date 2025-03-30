@@ -751,6 +751,8 @@ socket.addEventListener('message', async (event) => {
     console.log(`Assigned player ID: ${playerId}`);
   } else if (data.type === 'updatePosition') {
     if (!otherPlayers[data.id]) {
+      console.log(`Creating new player controller for ID: ${data.id}`);
+
       // Create a new BasicCharacterController for this player
       const params = {
         camera: null, // Other players don't need a camera
