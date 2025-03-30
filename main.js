@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
+  import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
@@ -732,12 +732,17 @@ _TestLerp(1.0 - Math.pow(0.3, 1.0 / 100.0),
 socket.addEventListener('message', async (event) => {
   let data;
 
-  // Check if the data is a Blob and convert it to JSON
-  if (event.data instanceof Blob) {
-    const text = await event.data.text(); // Convert Blob to text
-    data = JSON.parse(text); // Parse the JSON string
-  } else {
-    data = JSON.parse(event.data); // Parse directly if it's already a string
+  try {
+    // Check if the data is a Blob and convert it to JSON
+    if (event.data instanceof Blob) {
+      const text = await event.data.text(); // Convert Blob to text
+      data = JSON.parse(text); // Parse the JSON string
+    } else {
+      data = JSON.parse(event.data); // Parse directly if it's already a string
+    }
+  } catch (error) {
+    console.warn('Received non-JSON message:', event.data);
+    return; // Skip non-JSON messages
   }
 
   // Handle different message types
@@ -752,17 +757,17 @@ socket.addEventListener('message', async (event) => {
         scene: _APP._scene, // Use the main scene
       };
       const playerController = new BasicCharacterController(params);
-    
+
       // Wait for the model to load before setting the position and rotation
       playerController._LoadModels((model) => {
         model.position.set(data.position.x, data.position.y, data.position.z);
         model.quaternion.set(data.rotation.x, data.rotation.y, data.rotation.z, data.rotation.w);
         console.log(`Model loaded and position/rotation set for player: ${data.id}`);
       });
-    
+
       // Store the controller in the otherPlayers object
       otherPlayers[data.id] = playerController;
-    
+
       console.log(`Added new player: ${data.id}`, otherPlayers);
     } else {
       // Update the position, rotation, and animation state of the existing player
@@ -770,13 +775,11 @@ socket.addEventListener('message', async (event) => {
       if (playerController._target) {
         playerController._target.position.set(data.position.x, data.position.y, data.position.z);
         playerController._target.quaternion.set(data.rotation.x, data.rotation.y, data.rotation.z, data.rotation.w);
-    
+
         // Update the animation state
         if (data.animationState && playerController._stateMachine) {
           playerController._stateMachine.SetState(data.animationState);
         }
-    
-        //console.log(`Updated player position, rotation, and animation: ${data.id}`, playerController._target.position);
       } else {
         console.warn(`Player model not yet loaded for ID: ${data.id}`);
       }
