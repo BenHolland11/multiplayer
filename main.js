@@ -77,6 +77,8 @@ class BasicCharacterController {
           clip: clip,
           action: action,
         };
+        console.log(`Loaded animation: ${animName}`);
+
       };
   
       const animLoader = new FBXLoader(this._manager);
