@@ -60,6 +60,7 @@ class BasicCharacterController {
       });
   
       this._target = fbx;
+      
       this._params.scene.add(this._target);
   
       this._mixer = new THREE.AnimationMixer(this._target);
@@ -733,7 +734,7 @@ _TestLerp(1.0 - Math.pow(0.3, 1.0 / 100.0),
 
 socket.addEventListener('message', async (event) => {
   let data;
-
+  console.log(event.data)
   try {
     // Check if the data is a Blob and convert it to JSON
     if (event.data instanceof Blob) {
@@ -794,6 +795,7 @@ socket.addEventListener('message', async (event) => {
 // Handle connection open
 socket.addEventListener('open', () => {
   console.log('Connected to WebSocket server');
+  
 });
 
 // Handle connection close

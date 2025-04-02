@@ -7,21 +7,31 @@ const wss = new WebSocket.Server({ port: PORT });
 const clients = new Map();
 
 wss.on('connection', (ws) => {
-  const id = Date.now();
+  const id = Date.now(); // Generate a unique ID for the client
   clients.set(id, ws);
 
   console.log(`Client connected: ${id}`);
 
+  // Send the `assignId` message to the client
+  ws.send(JSON.stringify({ type: 'assignId', id }));
+
   ws.on('message', (message) => {
     const data = JSON.parse(message);
-    if (data.type === 'updatePosition') {
-      // console.log(`Received position update from ${id}:`, data.position);
-    }
 
-    // Broadcast message to all clients except the sender
-    for (const [clientId, client] of clients) {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
+    if (data.type === 'updatePosition') {
+      console.log(`Received position update from ${id}:`, data.position);
+
+      // Broadcast the message to all other clients
+      for (const [clientId, client] of clients) {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify({
+            type: 'updatePosition',
+            id,
+            position: data.position,
+            rotation: data.rotation,
+            animationState: data.animationState,
+          }));
+        }
       }
     }
   });
